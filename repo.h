@@ -1,31 +1,29 @@
-#pragma once
-#include <deque>
-#include <string.h>
+#ifndef REPO_H
+#define REPO_H
 #include <iostream>
+#include <deque>
 
-using namespace std;
 template<class T>
-
 class Repo {
-protected:
-	deque<T> elem;
-public:
-	Repo<T>();
-	deque<T> getAll();
-	void addItem(T&);
-	int getSize();
-	int remove(T&);
-	int update(T&, const char*, const char*, const char*);
-	int findElem(T&);
-	T findByName(const char*);
-	~Repo();
+	protected:
+		std::deque<T> elem;
+	public:
+		Repo();
+		~Repo();
+		void addItem(T&);
+		int delItem(T&);
+		void updateItem(T&, T&);
+		std::deque<T> getAll();
+		int findElem(T&);
+		T findByName(const char*);
+		int getSize();
 };
 
 template <class T>
 Repo<T>::Repo() {}
 
-template <class T>
-deque<T> Repo<T>::getAll() {
+template<class T>
+std::deque<T> Repo<T>::getAll() {
 	return this->elem;
 }
 
@@ -40,7 +38,7 @@ int Repo<T>::getSize() {
 }
 
 template <class T>
-int Repo<T>::remove(T& t) {
+int Repo<T>::delItem(T& t) {
 	int i = this->findElem(t);
 	if (i != -1) {
 		elem.erase(elem.begin() + i);
@@ -49,18 +47,11 @@ int Repo<T>::remove(T& t) {
 	return -1;
 }
 
-template <class T>
-int Repo<T>::update(T& c, const char* name, const char* autor, const char* status) {
-	for (int iter = 0; iter < elem.size(); iter++) {
-		if (elem[iter] == c) {
-			elem[iter].setName(name);
-			elem[iter].setAutor(autor);
-			elem[iter].setStatus(status);
-			return 0;
-		}
-	}
-	return -1;
+template<class T>
+void Repo<T>::updateItem(T& most_update, T& update) {
+	most_update = update;
 }
+
 
 template <class T>
 int Repo<T>::findElem(T& t) {
@@ -75,12 +66,14 @@ int Repo<T>::findElem(T& t) {
 template <class T>
 T Repo<T>::findByName(const char* name) {
 	for (int i = 0; i < this->getSize(); i++) {
-		if (strcmp(elem[i].getName(),name) == 0) {
+		if (strcmp(elem[i].getName(), name) == 0) {
 			return elem[i];
 		}
 	}
-	return T("", "", "");
+	return T();
 }
 
-template <class T>
+template<class T>
 Repo<T>::~Repo() {}
+
+#endif // !REPO_H

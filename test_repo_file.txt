@@ -1,4 +1,0 @@
-name_1 autor_1 da
-name_2 autor_2 nu
-name_3 autor_3 nu
-name_4 autor_4 da
